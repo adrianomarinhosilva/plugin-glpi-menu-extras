@@ -12,8 +12,12 @@ function plugin_init_extras() {
 
 // Função que adiciona o menu principal
 function plugin_extras_redefine_menus($menu) {
-    // Check if user has Super-Admin profile
-    if (!isset($_SESSION['glpiactiveprofile']['id']) || $_SESSION['glpiactiveprofile']['id'] != 4) {
+    // Array de IDs de perfis permitidos
+    $allowed_profiles = [4, 24, 28, 30, 31, 33, 34, 35, 36, 37, 38, 39, 172, 176, 180];
+    
+    // Check if user has an allowed profile
+    if (!isset($_SESSION['glpiactiveprofile']['id']) || 
+        !in_array($_SESSION['glpiactiveprofile']['id'], $allowed_profiles)) {
         return $menu;
     }
 
@@ -34,7 +38,6 @@ function plugin_extras_redefine_menus($menu) {
     ];
     return $menu;
 }
-
 
 function plugin_version_extras() {
     return [

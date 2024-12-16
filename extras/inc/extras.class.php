@@ -1,6 +1,8 @@
 <?php
-// extras.class.php
 class PluginExtrasMenu extends CommonGLPI {
+    // Array de IDs de perfis permitidos
+    private static $allowed_profiles = [4, 24, 28, 30, 31, 33, 34, 35, 36, 37, 38, 39, 172, 176, 180];
+
     static function getMenuName() {
         return 'Extras';
     }
@@ -10,11 +12,11 @@ class PluginExtrasMenu extends CommonGLPI {
     }
 
     static function canView() {
-        // Check if user has Super-Admin profile (ID 4)
+        // Check if user has an allowed profile
         if (!isset($_SESSION['glpiactiveprofile']['id'])) {
             return false;
         }
-        return $_SESSION['glpiactiveprofile']['id'] == 4;
+        return in_array($_SESSION['glpiactiveprofile']['id'], self::$allowed_profiles);
     }
 
     static function getMenuContent() {
