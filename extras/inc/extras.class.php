@@ -1,4 +1,5 @@
 <?php
+// extras.class.php
 class PluginExtrasMenu extends CommonGLPI {
     static function getMenuName() {
         return 'Extras';
@@ -9,7 +10,11 @@ class PluginExtrasMenu extends CommonGLPI {
     }
 
     static function canView() {
-        return Session::haveRight('config', READ);
+        // Check if user has Super-Admin profile (ID 4)
+        if (!isset($_SESSION['glpiactiveprofile']['id'])) {
+            return false;
+        }
+        return $_SESSION['glpiactiveprofile']['id'] == 4;
     }
 
     static function getMenuContent() {

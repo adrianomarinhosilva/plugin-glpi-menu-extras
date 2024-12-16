@@ -12,6 +12,11 @@ function plugin_init_extras() {
 
 // Função que adiciona o menu principal
 function plugin_extras_redefine_menus($menu) {
+    // Check if user has Super-Admin profile
+    if (!isset($_SESSION['glpiactiveprofile']['id']) || $_SESSION['glpiactiveprofile']['id'] != 4) {
+        return $menu;
+    }
+
     $menu['extras'] = [
         'title' => 'Extras',
         'icon'  => 'ti ti-brain',
@@ -29,6 +34,7 @@ function plugin_extras_redefine_menus($menu) {
     ];
     return $menu;
 }
+
 
 function plugin_version_extras() {
     return [
